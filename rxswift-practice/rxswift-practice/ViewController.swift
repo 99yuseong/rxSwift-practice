@@ -76,12 +76,15 @@ extension ViewController {
         self.editText.text = ""
         self.indicator.startAnimating()
         
-        let url = URL(string: MEMBER_LIST_URL)!
-        let data = try! Data(contentsOf: url)
-        let json = String(data: data, encoding: .utf8)
-        self.editText.text = json
-        
-        self.indicator.stopAnimating()
+        DispatchQueue.global().async {
+            let url = URL(string: MEMBER_LIST_URL)!
+            let data = try! Data(contentsOf: url)
+            let json = String(data: data, encoding: .utf8)
+            DispatchQueue.main.async {
+                self.editText.text = json
+                self.indicator.stopAnimating()
+            }
+        }
     }
 }
 
