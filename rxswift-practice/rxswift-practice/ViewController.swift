@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         $0.setTitle("LOAD", for: .normal)
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = .black
-        $0.addTarget(self, action: #selector(loadJson), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(onLoad), for: .touchUpInside)
     }
     
     private lazy var indicator = UIActivityIndicatorView().then {
@@ -97,29 +97,43 @@ extension ViewController {
     }
 }
 
+class 나중에생기는데이터<T> {
+    private let task: (@escaping (T) -> Void) -> Void
+    
+    init(task: @escaping (@escaping (T) -> Void) -> Void) {
+        self.task = task
+    }
+    
+    func 나중에오면(_ f: @escaping (T) -> Void) {
+        task(f)
+    }
+}
+
 // MARK - Data
 extension ViewController {
     
-    private func downloadJson(_ url: String, _ completion: @escaping (String?) -> Void) {
-        DispatchQueue.global().async {
-            let url = URL(string: url)!
-            let data = try! Data(contentsOf: url)
-            let json = String(data: data, encoding: .utf8)
-            DispatchQueue.main.async {
-                completion(json)
+    private func downloadJson(_ url: String) -> 나중에생기는데이터<String?> {
+        return 나중에생기는데이터 { f in
+            DispatchQueue.global().async {
+                let url = URL(string: url)!
+                let data = try! Data(contentsOf: url)
+                let json = String(data: data, encoding: .utf8)
+                DispatchQueue.main.async {
+                    f(json)
+                }
             }
         }
     }
     
-    @objc private func loadJson() {
+    @objc private func onLoad() {
         self.editText.text = ""
         setVisibleWithAnimation(self.indicator, true)
         
-        self.downloadJson(MEMBER_LIST_URL) { json in
-            self.editText.text = json
-            self.setVisibleWithAnimation(self.indicator, false)
-        }
-        
+        downloadJson(MEMBER_LIST_URL)
+            .나중에오면 { json in
+                self.editText.text = json
+                self.setVisibleWithAnimation(self.indicator, false)
+            }
     }
 }
 
