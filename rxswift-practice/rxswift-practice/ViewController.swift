@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import SwiftyJSON
+import RxSwift
 
 let MEMBER_LIST_URL = "https://my.api.mockaroo.com/members_with_avatar.json?key=44ce18f0"
 
@@ -112,16 +113,18 @@ class 나중에생기는데이터<T> {
 // MARK - Data
 extension ViewController {
     
-    private func downloadJson(_ url: String) -> 나중에생기는데이터<String?> {
-        return 나중에생기는데이터 { f in
+    private func downloadJson(_ url: String) -> Observable<String?> {
+        return Observable.create() { f in
             DispatchQueue.global().async {
                 let url = URL(string: url)!
                 let data = try! Data(contentsOf: url)
                 let json = String(data: data, encoding: .utf8)
                 DispatchQueue.main.async {
-                    f(json)
+                    f.onNext(json)
                 }
             }
+            
+            return Disposables.create()
         }
     }
     
@@ -129,11 +132,18 @@ extension ViewController {
         self.editText.text = ""
         setVisibleWithAnimation(self.indicator, true)
         
-        downloadJson(MEMBER_LIST_URL)
-            .나중에오면 { json in
+        _ = downloadJson(MEMBER_LIST_URL)
+            .subscribe { event in
+            switch event {
+            case .next(let json):
                 self.editText.text = json
                 self.setVisibleWithAnimation(self.indicator, false)
+            case .completed:
+                break
+            case .error(let err):
+                break
             }
+        }
     }
 }
 
