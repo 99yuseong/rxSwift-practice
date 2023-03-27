@@ -13,6 +13,8 @@ import SwiftyJSON
 let MEMBER_LIST_URL = "https://my.api.mockaroo.com/members_with_avatar.json?key=44ce18f0"
 
 class ViewController: UIViewController {
+    
+    private var indicatorAnimator: UIViewPropertyAnimator?
 
     private lazy var timerLabel = UILabel().then {
         $0.textColor = .darkGray
@@ -28,6 +30,8 @@ class ViewController: UIViewController {
     
     private lazy var indicator = UIActivityIndicatorView().then {
         $0.style = UIActivityIndicatorView.Style.medium
+        $0.startAnimating()
+        $0.isHidden = true
     }
     
     private lazy var loadContainer = UIStackView(arrangedSubviews: [loadBtn, indicator]).then {
@@ -45,8 +49,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTimer()
+        setupView()
         setupLayout()
+        setupTimer()
+    }
+    
+    private func setupView() {
+        self.view.backgroundColor = .white
     }
     
     private func setupLayout() {
@@ -72,17 +81,34 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
+    private func setVisibleWithAnimation(_ v: UIView?, _ s: Bool) {
+        guard let v = v else { return }
+        
+        self.indicatorAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) { [weak v] in
+            v?.isHidden = !s
+        }
+        
+        self.indicatorAnimator?.addCompletion { [weak self] _ in
+            self?.view.layoutIfNeeded()
+        }
+        
+        self.indicatorAnimator?.startAnimation()
+    }
+}
+
+extension ViewController {
     @objc private func loadJson() {
         self.editText.text = ""
-        self.indicator.startAnimating()
+        setVisibleWithAnimation(self.indicator, true)
         
         DispatchQueue.global().async {
             let url = URL(string: MEMBER_LIST_URL)!
             let data = try! Data(contentsOf: url)
             let json = String(data: data, encoding: .utf8)
+            
             DispatchQueue.main.async {
                 self.editText.text = json
-                self.indicator.stopAnimating()
+                self.setVisibleWithAnimation(self.indicator, false)
             }
         }
     }

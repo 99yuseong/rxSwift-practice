@@ -85,7 +85,6 @@
 				0ECB86FC7B716731D5836806 /* Pods-rxswift-practice.debug.xcconfig */,
 				5E17F2E9A3684260BBABADD5 /* Pods-rxswift-practice.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
