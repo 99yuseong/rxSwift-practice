@@ -80,6 +80,7 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK - Animation
 extension ViewController {
     private func setVisibleWithAnimation(_ v: UIView?, _ s: Bool) {
         guard let v = v else { return }
@@ -96,21 +97,29 @@ extension ViewController {
     }
 }
 
+// MARK - Data
 extension ViewController {
+    
+    private func downloadJson(_ url: String, _ completion: @escaping (String?) -> Void) {
+        DispatchQueue.global().async {
+            let url = URL(string: url)!
+            let data = try! Data(contentsOf: url)
+            let json = String(data: data, encoding: .utf8)
+            DispatchQueue.main.async {
+                completion(json)
+            }
+        }
+    }
+    
     @objc private func loadJson() {
         self.editText.text = ""
         setVisibleWithAnimation(self.indicator, true)
         
-        DispatchQueue.global().async {
-            let url = URL(string: MEMBER_LIST_URL)!
-            let data = try! Data(contentsOf: url)
-            let json = String(data: data, encoding: .utf8)
-            
-            DispatchQueue.main.async {
-                self.editText.text = json
-                self.setVisibleWithAnimation(self.indicator, false)
-            }
+        self.downloadJson(MEMBER_LIST_URL) { json in
+            self.editText.text = json
+            self.setVisibleWithAnimation(self.indicator, false)
         }
+        
     }
 }
 
