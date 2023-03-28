@@ -10,9 +10,11 @@
 		3179AAB251DF56998E2DEF8F /* Pods_rxswift_practice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72C33ECCAC429E3D7D650492 /* Pods_rxswift_practice.framework */; };
 		42CD027329D1AA0100618E53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD027229D1AA0100618E53 /* AppDelegate.swift */; };
 		42CD027529D1AA0100618E53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD027429D1AA0100618E53 /* SceneDelegate.swift */; };
-		42CD027729D1AA0100618E53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD027629D1AA0100618E53 /* ViewController.swift */; };
+		42CD027729D1AA0100618E53 /* Step1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD027629D1AA0100618E53 /* Step1ViewController.swift */; };
 		42CD027C29D1AA0200618E53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42CD027B29D1AA0200618E53 /* Assets.xcassets */; };
 		42CD027F29D1AA0200618E53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CD027D29D1AA0200618E53 /* LaunchScreen.storyboard */; };
+		42CD028729D2A3D000618E53 /* Step2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028629D2A3D000618E53 /* Step2ViewController.swift */; };
+		42CD028929D2A98700618E53 /* MemberListCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028829D2A98700618E53 /* MemberListCellTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +22,12 @@
 		42CD026F29D1AA0100618E53 /* rxswift-practice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "rxswift-practice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CD027229D1AA0100618E53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42CD027429D1AA0100618E53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		42CD027629D1AA0100618E53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		42CD027629D1AA0100618E53 /* Step1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step1ViewController.swift; sourceTree = "<group>"; };
 		42CD027B29D1AA0200618E53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42CD027E29D1AA0200618E53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42CD028029D1AA0200618E53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42CD028629D2A3D000618E53 /* Step2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2ViewController.swift; sourceTree = "<group>"; };
+		42CD028829D2A98700618E53 /* MemberListCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListCellTableViewCell.swift; sourceTree = "<group>"; };
 		5E17F2E9A3684260BBABADD5 /* Pods-rxswift-practice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rxswift-practice.release.xcconfig"; path = "Target Support Files/Pods-rxswift-practice/Pods-rxswift-practice.release.xcconfig"; sourceTree = "<group>"; };
 		72C33ECCAC429E3D7D650492 /* Pods_rxswift_practice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rxswift_practice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -71,12 +75,30 @@
 			children = (
 				42CD027229D1AA0100618E53 /* AppDelegate.swift */,
 				42CD027429D1AA0100618E53 /* SceneDelegate.swift */,
-				42CD027629D1AA0100618E53 /* ViewController.swift */,
+				42CD028B29D2DC1D00618E53 /* Step1 */,
 				42CD027B29D1AA0200618E53 /* Assets.xcassets */,
+				42CD028A29D2DC0900618E53 /* Step2 */,
 				42CD027D29D1AA0200618E53 /* LaunchScreen.storyboard */,
 				42CD028029D1AA0200618E53 /* Info.plist */,
 			);
 			path = "rxswift-practice";
+			sourceTree = "<group>";
+		};
+		42CD028A29D2DC0900618E53 /* Step2 */ = {
+			isa = PBXGroup;
+			children = (
+				42CD028629D2A3D000618E53 /* Step2ViewController.swift */,
+				42CD028829D2A98700618E53 /* MemberListCellTableViewCell.swift */,
+			);
+			path = Step2;
+			sourceTree = "<group>";
+		};
+		42CD028B29D2DC1D00618E53 /* Step1 */ = {
+			isa = PBXGroup;
+			children = (
+				42CD027629D1AA0100618E53 /* Step1ViewController.swift */,
+			);
+			path = Step1;
 			sourceTree = "<group>";
 		};
 		6033A79BEB2BFABD1301C374 /* Pods */ = {
@@ -202,9 +224,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42CD027729D1AA0100618E53 /* ViewController.swift in Sources */,
+				42CD027729D1AA0100618E53 /* Step1ViewController.swift in Sources */,
+				42CD028729D2A3D000618E53 /* Step2ViewController.swift in Sources */,
 				42CD027329D1AA0100618E53 /* AppDelegate.swift in Sources */,
 				42CD027529D1AA0100618E53 /* SceneDelegate.swift in Sources */,
+				42CD028929D2A98700618E53 /* MemberListCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

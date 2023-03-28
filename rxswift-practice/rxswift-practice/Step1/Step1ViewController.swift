@@ -13,10 +13,12 @@ import RxSwift
 
 let MEMBER_LIST_URL = "https://my.api.mockaroo.com/members_with_avatar.json?key=44ce18f0"
 
-class ViewController: UIViewController {
+class Step1ViewController: UIViewController {
     
     private var indicatorAnimator: UIViewPropertyAnimator?
 
+    private var disposeBag = DisposeBag()
+    
     private lazy var timerLabel = UILabel().then {
         $0.textColor = .darkGray
         $0.text = "0.0"
@@ -82,7 +84,7 @@ class ViewController: UIViewController {
 }
 
 // MARK - Animation
-extension ViewController {
+extension Step1ViewController {
     private func setVisibleWithAnimation(_ v: UIView?, _ s: Bool) {
         guard let v = v else { return }
         
@@ -111,7 +113,7 @@ class 나중에생기는데이터<T> {
 }
 
 // MARK - Data
-extension ViewController {
+extension Step1ViewController {
     
     // Observable의 생명주기
     // 1. Create
@@ -121,7 +123,7 @@ extension ViewController {
     // 4. onCompleted / onError
     // 5. Disposed
     
-    private func downloadJson(_ url: String) -> Observable<String?> {
+    private func downloadJson(_ url: String) -> Observable<String> {
         
         // Syntatic Sugar
         
@@ -181,13 +183,12 @@ extension ViewController {
         self.editText.text = ""
         setVisibleWithAnimation(self.indicator, true)
         
-        // 2. Observable로 오는 데이터를 받아서 처리하는 방법
-        let disposable = downloadJson(MEMBER_LIST_URL)
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default)) // operator: subscribe 시작할 때 어느 쓰레드에서 진행할 것인 지
-            .map({ json in json?.count ?? 0 }) // operator: json 존재하는 지 확인
-            .filter({ cnt in cnt > 0 }) // operator: count > 0인 것만 필터링
-            .map({ "\($0)" }) // operator: Int -> String 변환
-            .observe(on: MainScheduler.instance) // operator: 앞으로 나오는 것들은 메인쓰레드에서 진행
+        let jsonObservable = downloadJson(MEMBER_LIST_URL)
+        let helloObservable = Observable.just("Hello world")
+        
+        _ = Observable.zip(jsonObservable, helloObservable) { $1 + "\n" + $0 }
+            .observe(on: MainScheduler.instance) // operator: 앞으로 나오는 것들은 메인쓰레드에서 진행, 메인 스레드는 1개이므로, 인스턴스(싱글톤 static let instance로 선언되어 있음)를 사용
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default)) // DispatchQueue 스케쥴러를 하나 생성해서 인자로 사용
             .subscribe(
                 onNext: { json in
                     self.editText.text = json
@@ -196,6 +197,23 @@ extension ViewController {
                 },
                 onCompleted: { print("Com") },
                 onDisposed: { print("dispose") })
+            .disposed(by: self.disposeBag) // 도중에 앱을 종료하거나 할때 dispose 시키기 위해서 sugar api인 disposeBag에 담아 처리
+        
+        // 2. Observable로 오는 데이터를 받아서 처리하는 방법
+//        let disposable = downloadJson(MEMBER_LIST_URL)
+//            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default)) // operator: subscribe 시작할 때 어느 쓰레드에서 진행할 것인 지
+//            .map({ json in json?.count ?? 0 }) // operator: json 존재하는 지 확인
+//            .filter({ cnt in cnt > 0 }) // operator: count > 0인 것만 필터링
+//            .map({ "\($0)" }) // operator: Int -> String 변환
+//            .observe(on: MainScheduler.instance) // operator: 앞으로 나오는 것들은 메인쓰레드에서 진행
+//            .subscribe(
+//                onNext: { json in
+//                    self.editText.text = json
+//                    self.setVisibleWithAnimation(self.indicator, false)
+//                    print(json as Any)
+//                },
+//                onCompleted: { print("Com") },
+//                onDisposed: { print("dispose") })
 //            .subscribe { event in
 //            switch event {
 //            case .next(let json):
@@ -226,7 +244,7 @@ struct ViewController_ViewPresentable: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> some UIViewController {
-        ViewController()
+        Step1ViewController()
     }
     
     
