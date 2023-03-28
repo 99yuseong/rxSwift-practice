@@ -144,3 +144,54 @@ extension ViewController {
 }
 
 ```
+
+``` swift
+extension ViewController {
+    
+    // Observable의 생명주기
+    // 1. Create
+    // 2. Subscribe >> 실제 실행
+    // 3. onNext
+    // ----- 끝 -----
+    // 4. onCompleted / onError
+    // 5. Disposed
+    
+    private func downloadJson(_ url: String) -> Observable<String?> {
+        
+        // Syntatic Sugar
+        
+        // 0. Base
+        return Observable.create { emitter in
+            emitter.onNext("Hello world")
+            emitter.onCompleted()
+            return Disposables.create ()
+        }
+        
+        // 1. Observable.just() 1개 전달할 때
+        return Observable.just("Hello world")
+        
+        // 2. Observable.from([]) 여러 번으로 나눠서 전달할 때
+        return Observable.from(["Hello", "world"])
+    }
+    
+    @objc private func onLoad() {
+        self.editText.text = ""
+        setVisibleWithAnimation(self.indicator, true)
+        
+        // 2. Observable로 오는 데이터를 받아서 처리하는 방법
+        let disposable = downloadJson(MEMBER_LIST_URL)
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default)) // operator: subscribe 시작할 때 어느 쓰레드에서 진행할 것인 지
+            .map({ json in json?.count ?? 0 }) // operator: json 존재하는 지 확인
+            .filter({ cnt in cnt > 0 }) // operator: count > 0인 것만 필터링
+            .map({ "\($0)" }) // operator: Int -> String 변환
+            .observe(on: MainScheduler.instance) // operator: 앞으로 나오는 것들은 메인쓰레드에서 진행
+            .subscribe(
+                onNext: { json in
+                    self.editText.text = json
+                    self.setVisibleWithAnimation(self.indicator, false)
+                    print(json as Any)
+                },
+                onCompleted: { print("Com") },
+                onDisposed: { print("dispose") })
+
+```
