@@ -28,6 +28,8 @@ class Step2ViewController: UIViewController {
     }
     
     private func setupView() {
+        self.view.backgroundColor = .white
+        setupNavigationBar()
         setupTableView()
     }
     
@@ -42,6 +44,11 @@ class Step2ViewController: UIViewController {
     private func setupTableView() {
         customTableView.delegate = self
         customTableView.dataSource = self
+    }
+    
+    private func setupNavigationBar() {
+        self.title = "Member"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
 }
@@ -64,10 +71,23 @@ extension Step2ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = data[indexPath.row]
-        print(item.name)
+        let member = data[indexPath.row]
+        showDetail(member: member)
     }
 
+}
+
+extension Step2ViewController: SendMemberDataDelegate {
+    
+    func sendData(response: Member) -> Member {
+        return response
+    }
+    
+    private func showDetail(member: Member) {
+        let vc = DetailViewController()
+        vc.updateData(member: member)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension Step2ViewController {
@@ -103,4 +123,8 @@ extension Step2ViewController {
             }
         }
     }
+}
+
+protocol SendMemberDataDelegate {
+    func sendData(response: Member) -> Member
 }

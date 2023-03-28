@@ -79,6 +79,10 @@ class MemberListCellTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView).offset(-4)
             make.trailing.equalTo(contentView).offset(-20)
         }
+        
+        avatar.snp.makeConstraints { make in
+            make.width.equalTo(avatar.snp.height)
+        }
     }
     
     override func prepareForReuse() {
@@ -97,10 +101,6 @@ extension MemberListCellTableViewCell {
         setName(name: data.name)
         setJob(job: data.job)
         setAge(age: data.age)
-    }
-    
-    private func setAvatar(img: UIImage) {
-        self.avatar.image = img
     }
     
     private func setName(name: String) {
