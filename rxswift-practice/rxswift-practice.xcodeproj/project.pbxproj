@@ -16,6 +16,12 @@
 		42CD028729D2A3D000618E53 /* Step2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028629D2A3D000618E53 /* Step2ViewController.swift */; };
 		42CD028929D2A98700618E53 /* MemberListCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028829D2A98700618E53 /* MemberListCellTableViewCell.swift */; };
 		42CD028D29D2DCDE00618E53 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028C29D2DCDE00618E53 /* DetailViewController.swift */; };
+		42CD029029D30E0900618E53 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028F29D30E0900618E53 /* MenuViewController.swift */; };
+		42CD029229D30E8B00618E53 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029129D30E8B00618E53 /* OrderViewController.swift */; };
+		42CD029429D3108200618E53 /* MenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */; };
+		42CD029629D3E28F00618E53 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029529D3E28F00618E53 /* Model.swift */; };
+		42CD029829D3E2C400618E53 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029729D3E2C400618E53 /* APIService.swift */; };
+		42CD029A29D3E49A00618E53 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029929D3E49A00618E53 /* extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,12 @@
 		42CD028629D2A3D000618E53 /* Step2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2ViewController.swift; sourceTree = "<group>"; };
 		42CD028829D2A98700618E53 /* MemberListCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListCellTableViewCell.swift; sourceTree = "<group>"; };
 		42CD028C29D2DCDE00618E53 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		42CD028F29D30E0900618E53 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		42CD029129D30E8B00618E53 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
+		42CD029529D3E28F00618E53 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		42CD029729D3E2C400618E53 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		42CD029929D3E49A00618E53 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		5E17F2E9A3684260BBABADD5 /* Pods-rxswift-practice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rxswift-practice.release.xcconfig"; path = "Target Support Files/Pods-rxswift-practice/Pods-rxswift-practice.release.xcconfig"; sourceTree = "<group>"; };
 		72C33ECCAC429E3D7D650492 /* Pods_rxswift_practice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rxswift_practice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,10 +89,11 @@
 			children = (
 				42CD027229D1AA0100618E53 /* AppDelegate.swift */,
 				42CD027429D1AA0100618E53 /* SceneDelegate.swift */,
-				42CD028B29D2DC1D00618E53 /* Step1 */,
 				42CD027B29D1AA0200618E53 /* Assets.xcassets */,
-				42CD028A29D2DC0900618E53 /* Step2 */,
 				42CD027D29D1AA0200618E53 /* LaunchScreen.storyboard */,
+				42CD028B29D2DC1D00618E53 /* Step1 */,
+				42CD028A29D2DC0900618E53 /* Step2 */,
+				42CD028E29D30DB300618E53 /* Step3 */,
 				42CD028029D1AA0200618E53 /* Info.plist */,
 			);
 			path = "rxswift-practice";
@@ -102,6 +115,75 @@
 				42CD027629D1AA0100618E53 /* Step1ViewController.swift */,
 			);
 			path = Step1;
+			sourceTree = "<group>";
+		};
+		42CD028E29D30DB300618E53 /* Step3 */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02A129D42E8100618E53 /* Pages */,
+				42CD029D29D42E5100618E53 /* Domain */,
+				42CD029E29D42E5D00618E53 /* Utils */,
+			);
+			path = Step3;
+			sourceTree = "<group>";
+		};
+		42CD029B29D42E3300618E53 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029729D3E2C400618E53 /* APIService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		42CD029C29D42E4100618E53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029529D3E28F00618E53 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42CD029D29D42E5100618E53 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029C29D42E4100618E53 /* Model */,
+				42CD029B29D42E3300618E53 /* Service */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		42CD029E29D42E5D00618E53 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029929D3E49A00618E53 /* extension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		42CD029F29D42E6D00618E53 /* MenuList */ = {
+			isa = PBXGroup;
+			children = (
+				42CD028F29D30E0900618E53 /* MenuViewController.swift */,
+				42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */,
+			);
+			path = MenuList;
+			sourceTree = "<group>";
+		};
+		42CD02A029D42E7800618E53 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029129D30E8B00618E53 /* OrderViewController.swift */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		42CD02A129D42E8100618E53 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029F29D42E6D00618E53 /* MenuList */,
+				42CD02A029D42E7800618E53 /* Order */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		6033A79BEB2BFABD1301C374 /* Pods */ = {
@@ -230,9 +312,15 @@
 				42CD027729D1AA0100618E53 /* Step1ViewController.swift in Sources */,
 				42CD028729D2A3D000618E53 /* Step2ViewController.swift in Sources */,
 				42CD027329D1AA0100618E53 /* AppDelegate.swift in Sources */,
+				42CD029A29D3E49A00618E53 /* extension.swift in Sources */,
+				42CD029429D3108200618E53 /* MenuItemTableViewCell.swift in Sources */,
+				42CD029829D3E2C400618E53 /* APIService.swift in Sources */,
+				42CD029029D30E0900618E53 /* MenuViewController.swift in Sources */,
+				42CD029629D3E28F00618E53 /* Model.swift in Sources */,
 				42CD028D29D2DCDE00618E53 /* DetailViewController.swift in Sources */,
 				42CD027529D1AA0100618E53 /* SceneDelegate.swift in Sources */,
 				42CD028929D2A98700618E53 /* MemberListCellTableViewCell.swift in Sources */,
+				42CD029229D30E8B00618E53 /* OrderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

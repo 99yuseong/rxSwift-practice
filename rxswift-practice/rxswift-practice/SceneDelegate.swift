@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let viewController = UINavigationController(rootViewController: Step2ViewController()) // 처음 보일 view controller
+        let viewController = UINavigationController(rootViewController: MenuViewController()) // 처음 보일 view controller
                 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = viewController // 위에서 만든 view controller를 첫 화면으로 띄우기
