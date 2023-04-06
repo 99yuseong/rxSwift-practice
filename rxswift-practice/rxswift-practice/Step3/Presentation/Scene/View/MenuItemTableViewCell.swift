@@ -8,23 +8,51 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxRelay
 
 class MenuItemTableViewCell: UITableViewCell {
+
+    // MARK - Property
+    static let identifier = "MenuItemTableViewCell"
     
-    private lazy var plusBtn = UIButton().then {
+    private var cellDisposeBag = DisposeBag() // Cell이 deinit() 될 때, dispose
+    var disposeBag = DisposeBag() // Cell이 Reuse 될 때, dispose
+    
+    lazy var onCountChanged: (Int) -> Void = { self.onChanged.onNext($0) }
+    
+    let onData = BehaviorSubject<Menu>(value: Menu.mock)
+    let onChanged = PublishSubject<Int>()
+    
+    // MARK - LifeCycle
+    override init(style: MenuItemTableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        configureSubviews()
+        configureLayout()
+        bindUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
+    // MARK - UI
+    lazy var plusBtn = UIButton().then {
         $0.setTitle("+", for: .normal)
         $0.setTitleColor(.lightGray, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 28, weight: .medium)
-        
-        $0.addTarget(self, action: #selector(addItems), for: .touchUpInside)
     }
     
-    private lazy var minusBtn = UIButton().then {
+    lazy var minusBtn = UIButton().then {
         $0.setTitle("-", for: .normal)
         $0.setTitleColor(.lightGray, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 28, weight: .medium)
-        
-        $0.addTarget(self, action: #selector(removeItems), for: .touchUpInside)
     }
     
     private var menuName = UILabel().then {
@@ -59,20 +87,15 @@ class MenuItemTableViewCell: UITableViewCell {
         $0.font = UIFont.systemFont(ofSize: 17)
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupLayout()
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupLayout() {
+    // MARK - Configure
+    private func configureSubviews() {
         contentView.addSubview(btnStack)
         contentView.addSubview(menuNameStack)
         contentView.addSubview(price)
-        
+    }
+    
+    private func configureLayout() {
         plusBtn.snp.makeConstraints { make in
             make.width.equalTo(32)
             make.height.equalTo(28)
@@ -104,12 +127,25 @@ class MenuItemTableViewCell: UITableViewCell {
 }
 
 extension MenuItemTableViewCell {
-    @objc private func addItems() {
-        print("+ is pressed")
-    }
-    
-    @objc private func removeItems() {
-        print("- is pressed")
+    private func bindUI() {
+        onData // 얘는 cell이 deinit 될 때까지 계속 켜져 있어야해
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] menu in
+                self?.setMenuName(title: menu.name)
+                self?.setMenuPrice(for: menu.price)
+                self?.setCount(for: menu.count)
+            })
+            .disposed(by: cellDisposeBag) // 이녀석이 대단한 녀석이었군
+        
+        plusBtn.rx.tap
+            .asObservable()
+            .subscribe(onNext: { [weak self] in self?.onChanged.onNext(1) })
+            .disposed(by: cellDisposeBag)
+        
+        minusBtn.rx.tap
+            .asObservable()
+            .subscribe(onNext: { [weak self] in self?.onChanged.onNext(-1) })
+            .disposed(by: cellDisposeBag)
     }
     
     func setMenuName(title: String) {

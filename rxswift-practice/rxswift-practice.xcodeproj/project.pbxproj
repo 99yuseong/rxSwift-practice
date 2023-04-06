@@ -19,9 +19,19 @@
 		42CD029029D30E0900618E53 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD028F29D30E0900618E53 /* MenuViewController.swift */; };
 		42CD029229D30E8B00618E53 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029129D30E8B00618E53 /* OrderViewController.swift */; };
 		42CD029429D3108200618E53 /* MenuItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */; };
-		42CD029629D3E28F00618E53 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029529D3E28F00618E53 /* Model.swift */; };
-		42CD029829D3E2C400618E53 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029729D3E2C400618E53 /* APIService.swift */; };
+		42CD029629D3E28F00618E53 /* MenuDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029529D3E28F00618E53 /* MenuDTO.swift */; };
 		42CD029A29D3E49A00618E53 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD029929D3E49A00618E53 /* extension.swift */; };
+		42CD02A529D430AA00618E53 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02A429D430AA00618E53 /* MenuViewModel.swift */; };
+		42CD02B629D7C70C00618E53 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02B529D7C70C00618E53 /* MenuService.swift */; };
+		42CD02C929DAA46B00618E53 /* MenuServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02C829DAA46B00618E53 /* MenuServiceProtocol.swift */; };
+		42CD02CC29DAA6D100618E53 /* MenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02CB29DAA6D100618E53 /* MenuRepository.swift */; };
+		42CD02CE29DAA86C00618E53 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02CD29DAA86C00618E53 /* Menu.swift */; };
+		42CD02D129DAA8D300618E53 /* MenuRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02D029DAA8D300618E53 /* MenuRepositoryProtocol.swift */; };
+		42CD02D329DAB80000618E53 /* MenuUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02D229DAB80000618E53 /* MenuUseCase.swift */; };
+		42CD02D529DAB81C00618E53 /* MenuUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02D429DAB81C00618E53 /* MenuUseCaseProtocol.swift */; };
+		42CD02D829DBB2BC00618E53 /* URLSessionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02D729DBB2BC00618E53 /* URLSessionNetworkService.swift */; };
+		42CD02DA29DBDBF400618E53 /* URLSessionNetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02D929DBDBF400618E53 /* URLSessionNetworkServiceProtocol.swift */; };
+		42CD02DC29DBE45F00618E53 /* RegoAPIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CD02DB29DBE45F00618E53 /* RegoAPIConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +49,19 @@
 		42CD028F29D30E0900618E53 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		42CD029129D30E8B00618E53 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemTableViewCell.swift; sourceTree = "<group>"; };
-		42CD029529D3E28F00618E53 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		42CD029729D3E2C400618E53 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		42CD029529D3E28F00618E53 /* MenuDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDTO.swift; sourceTree = "<group>"; };
 		42CD029929D3E49A00618E53 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
+		42CD02A429D430AA00618E53 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		42CD02B529D7C70C00618E53 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuService.swift; sourceTree = "<group>"; };
+		42CD02C829DAA46B00618E53 /* MenuServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuServiceProtocol.swift; sourceTree = "<group>"; };
+		42CD02CB29DAA6D100618E53 /* MenuRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepository.swift; sourceTree = "<group>"; };
+		42CD02CD29DAA86C00618E53 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		42CD02D029DAA8D300618E53 /* MenuRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRepositoryProtocol.swift; sourceTree = "<group>"; };
+		42CD02D229DAB80000618E53 /* MenuUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuUseCase.swift; sourceTree = "<group>"; };
+		42CD02D429DAB81C00618E53 /* MenuUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuUseCaseProtocol.swift; sourceTree = "<group>"; };
+		42CD02D729DBB2BC00618E53 /* URLSessionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkService.swift; sourceTree = "<group>"; };
+		42CD02D929DBDBF400618E53 /* URLSessionNetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		42CD02DB29DBE45F00618E53 /* RegoAPIConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegoAPIConfiguration.swift; sourceTree = "<group>"; };
 		5E17F2E9A3684260BBABADD5 /* Pods-rxswift-practice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rxswift-practice.release.xcconfig"; path = "Target Support Files/Pods-rxswift-practice/Pods-rxswift-practice.release.xcconfig"; sourceTree = "<group>"; };
 		72C33ECCAC429E3D7D650492 /* Pods_rxswift_practice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rxswift_practice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -87,14 +107,10 @@
 		42CD027129D1AA0100618E53 /* rxswift-practice */ = {
 			isa = PBXGroup;
 			children = (
-				42CD027229D1AA0100618E53 /* AppDelegate.swift */,
-				42CD027429D1AA0100618E53 /* SceneDelegate.swift */,
-				42CD027B29D1AA0200618E53 /* Assets.xcassets */,
-				42CD027D29D1AA0200618E53 /* LaunchScreen.storyboard */,
+				42CD028029D1AA0200618E53 /* Info.plist */,
 				42CD028B29D2DC1D00618E53 /* Step1 */,
 				42CD028A29D2DC0900618E53 /* Step2 */,
 				42CD028E29D30DB300618E53 /* Step3 */,
-				42CD028029D1AA0200618E53 /* Info.plist */,
 			);
 			path = "rxswift-practice";
 			sourceTree = "<group>";
@@ -120,70 +136,188 @@
 		42CD028E29D30DB300618E53 /* Step3 */ = {
 			isa = PBXGroup;
 			children = (
-				42CD02A129D42E8100618E53 /* Pages */,
-				42CD029D29D42E5100618E53 /* Domain */,
-				42CD029E29D42E5D00618E53 /* Utils */,
+				42CD02B529D7C70C00618E53 /* MenuService.swift */,
+				42CD02C829DAA46B00618E53 /* MenuServiceProtocol.swift */,
+				42CD02AE29D5C70300618E53 /* Utils */,
+				42CD02C629DAA31900618E53 /* Resource */,
+				42CD02C529DAA30700618E53 /* Application */,
+				42CD02BA29DAA22600618E53 /* Data */,
+				42CD02B929DAA21400618E53 /* Domain */,
+				42CD02B829DAA20D00618E53 /* Presentation */,
 			);
 			path = Step3;
 			sourceTree = "<group>";
 		};
-		42CD029B29D42E3300618E53 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				42CD029729D3E2C400618E53 /* APIService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		42CD029C29D42E4100618E53 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				42CD029529D3E28F00618E53 /* Model.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		42CD029D29D42E5100618E53 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				42CD029C29D42E4100618E53 /* Model */,
-				42CD029B29D42E3300618E53 /* Service */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		42CD029E29D42E5D00618E53 /* Utils */ = {
+		42CD02AE29D5C70300618E53 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				42CD029929D3E49A00618E53 /* extension.swift */,
+				42CD02DD29DBE46300618E53 /* Constant */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		42CD029F29D42E6D00618E53 /* MenuList */ = {
+		42CD02B829DAA20D00618E53 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02C129DAA2C400618E53 /* Scene */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		42CD02B929DAA21400618E53 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02BF29DAA2AB00618E53 /* Model */,
+				42CD02C029DAA2BA00618E53 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		42CD02BA29DAA22600618E53 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02BC29DAA23D00618E53 /* Network */,
+				42CD02BB29DAA23100618E53 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		42CD02BB29DAA23100618E53 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02BE29DAA29F00618E53 /* DataMapping */,
+				42CD02CF29DAA8C000618E53 /* Protocol */,
+				42CD02CB29DAA6D100618E53 /* MenuRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		42CD02BC29DAA23D00618E53 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02BD29DAA29800618E53 /* Service */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		42CD02BD29DAA29800618E53 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02CA29DAA47600618E53 /* Protocol */,
+				42CD02D729DBB2BC00618E53 /* URLSessionNetworkService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		42CD02BE29DAA29F00618E53 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				42CD029529D3E28F00618E53 /* MenuDTO.swift */,
+			);
+			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		42CD02BF29DAA2AB00618E53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02CD29DAA86C00618E53 /* Menu.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		42CD02C029DAA2BA00618E53 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02D629DAB82700618E53 /* Protocol */,
+				42CD02D229DAB80000618E53 /* MenuUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		42CD02C129DAA2C400618E53 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02C429DAA2F200618E53 /* ViewModel */,
+				42CD02C329DAA2E600618E53 /* View */,
+				42CD02C229DAA2DB00618E53 /* ViewController */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		42CD02C229DAA2DB00618E53 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				42CD028F29D30E0900618E53 /* MenuViewController.swift */,
-				42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */,
-			);
-			path = MenuList;
-			sourceTree = "<group>";
-		};
-		42CD02A029D42E7800618E53 /* Order */ = {
-			isa = PBXGroup;
-			children = (
 				42CD029129D30E8B00618E53 /* OrderViewController.swift */,
 			);
-			path = Order;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
-		42CD02A129D42E8100618E53 /* Pages */ = {
+		42CD02C329DAA2E600618E53 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				42CD029F29D42E6D00618E53 /* MenuList */,
-				42CD02A029D42E7800618E53 /* Order */,
+				42CD029329D3108200618E53 /* MenuItemTableViewCell.swift */,
 			);
-			path = Pages;
+			path = View;
+			sourceTree = "<group>";
+		};
+		42CD02C429DAA2F200618E53 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02A429D430AA00618E53 /* MenuViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		42CD02C529DAA30700618E53 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				42CD027429D1AA0100618E53 /* SceneDelegate.swift */,
+				42CD027229D1AA0100618E53 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		42CD02C629DAA31900618E53 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				42CD027D29D1AA0200618E53 /* LaunchScreen.storyboard */,
+				42CD027B29D1AA0200618E53 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		42CD02CA29DAA47600618E53 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02D929DBDBF400618E53 /* URLSessionNetworkServiceProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		42CD02CF29DAA8C000618E53 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02D029DAA8D300618E53 /* MenuRepositoryProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		42CD02D629DAB82700618E53 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02D429DAB81C00618E53 /* MenuUseCaseProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		42CD02DD29DBE46300618E53 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				42CD02DB29DBE45F00618E53 /* RegoAPIConfiguration.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 		6033A79BEB2BFABD1301C374 /* Pods */ = {
@@ -312,15 +446,25 @@
 				42CD027729D1AA0100618E53 /* Step1ViewController.swift in Sources */,
 				42CD028729D2A3D000618E53 /* Step2ViewController.swift in Sources */,
 				42CD027329D1AA0100618E53 /* AppDelegate.swift in Sources */,
+				42CD02D129DAA8D300618E53 /* MenuRepositoryProtocol.swift in Sources */,
 				42CD029A29D3E49A00618E53 /* extension.swift in Sources */,
+				42CD02CC29DAA6D100618E53 /* MenuRepository.swift in Sources */,
+				42CD02D329DAB80000618E53 /* MenuUseCase.swift in Sources */,
 				42CD029429D3108200618E53 /* MenuItemTableViewCell.swift in Sources */,
-				42CD029829D3E2C400618E53 /* APIService.swift in Sources */,
+				42CD02B629D7C70C00618E53 /* MenuService.swift in Sources */,
+				42CD02D529DAB81C00618E53 /* MenuUseCaseProtocol.swift in Sources */,
 				42CD029029D30E0900618E53 /* MenuViewController.swift in Sources */,
-				42CD029629D3E28F00618E53 /* Model.swift in Sources */,
+				42CD029629D3E28F00618E53 /* MenuDTO.swift in Sources */,
 				42CD028D29D2DCDE00618E53 /* DetailViewController.swift in Sources */,
+				42CD02A529D430AA00618E53 /* MenuViewModel.swift in Sources */,
+				42CD02C929DAA46B00618E53 /* MenuServiceProtocol.swift in Sources */,
+				42CD02CE29DAA86C00618E53 /* Menu.swift in Sources */,
 				42CD027529D1AA0100618E53 /* SceneDelegate.swift in Sources */,
+				42CD02DA29DBDBF400618E53 /* URLSessionNetworkServiceProtocol.swift in Sources */,
 				42CD028929D2A98700618E53 /* MemberListCellTableViewCell.swift in Sources */,
+				42CD02DC29DBE45F00618E53 /* RegoAPIConfiguration.swift in Sources */,
 				42CD029229D30E8B00618E53 /* OrderViewController.swift in Sources */,
+				42CD02D829DBB2BC00618E53 /* URLSessionNetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

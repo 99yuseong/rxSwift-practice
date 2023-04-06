@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/yuseongnam/Desktop/Yuseong/swift/rxSwift-practice/rxswift-practice/rxswift-practice/Step3/Services/MenuViewModel.swift">
+   </FileRef>
+   <FileRef
       location = "group:rxswift-practice.xcodeproj">
    </FileRef>
    <FileRef

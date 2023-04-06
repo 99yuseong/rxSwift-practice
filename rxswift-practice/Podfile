@@ -11,5 +11,6 @@ target 'rxswift-practice' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'SwiftyJSON'
+  pod 'RxViewController'
 
 end

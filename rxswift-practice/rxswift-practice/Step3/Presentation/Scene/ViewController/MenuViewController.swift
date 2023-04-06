@@ -8,11 +8,18 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxViewController
 
-
-class MenuViewController: UIViewController {
-
-    // MARK - Header
+final class MenuViewController: UIViewController {
+    
+    // MARK - Property
+    var viewModel: MenuViewModel?
+    private let disposeBag = DisposeBag()
+    
+    
+    // MARK - UI
     private var headerTitle = UILabel().then {
         $0.text = "Bear Fried Center"
         $0.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
@@ -24,13 +31,11 @@ class MenuViewController: UIViewController {
         $0.startAnimating()
     }
     
-    // MARK - TableView
     private var menuTableView = UITableView().then {
         $0.layer.backgroundColor = UIColor.white.cgColor
-        $0.register(MenuItemTableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
+        $0.register(MenuItemTableViewCell.self, forCellReuseIdentifier: "MenuItemTableViewCell")
     }
-    
-    // MARK - Order
+
     private var orderTitle = UILabel().then {
         $0.text = "Your Orders"
         $0.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -40,8 +45,6 @@ class MenuViewController: UIViewController {
         $0.setTitle("Clear", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        
-        $0.addTarget(self, action: #selector(onClear), for: .touchUpInside)
     }
     
     private var itemCount = UILabel().then {
@@ -65,14 +68,11 @@ class MenuViewController: UIViewController {
         $0.spacing = 8
     }
     
-    // MARK - OrderBtn
     private lazy var orderBtn = UIButton().then {
         $0.setTitle("ORDER", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         $0.backgroundColor = .black
-        
-        $0.addTarget(self, action: #selector(onOrder), for: .touchUpInside)
     }
     
     private lazy var headerContainer = UIView().then {
@@ -97,20 +97,31 @@ class MenuViewController: UIViewController {
         $0.axis = .vertical
     }
     
+    // MARK - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        setupLayout()
-        setupDelegate()
+        configureSubViews()
+        configureCommonUI()
+        configureLayout()
+        bindViewModel()
     }
     
-    private func setupView() {
+    
+    // MARK - Configure
+    private func configureCommonUI() {
         self.view.backgroundColor = .white
+        configureTableView()
     }
     
-    private func setupLayout() {
+    private func configureTableView() {
+        menuTableView.refreshControl = UIRefreshControl()
+    }
+    
+    private func configureSubViews() {
         self.view.addSubview(ContainerView)
-        
+    }
+    
+    private func configureLayout() {
         ContainerView.snp.makeConstraints { make in
             make.top.leading.bottom.trailing.equalTo(self.view.safeAreaLayoutGuide)
         }
@@ -161,64 +172,56 @@ class MenuViewController: UIViewController {
         
     }
     
-    private func setupDelegate() {
-        self.menuTableView.delegate = self
-        self.menuTableView.dataSource = self
-    }
-    
 }
 
 extension MenuViewController {
-    @objc private func onClear() {
-        print("clear")
-    }
-    
-    @objc private func onOrder() {
-        print("Order")
-        let vc = OrderViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! MenuItemTableViewCell
+    // MARK - Binding
+    func bindViewModel() {
         
-        cell.setMenuName(title: "MENU \(indexPath.row)")
-        cell.setMenuPrice(for: indexPath.row * 100)
-        cell.setCount(for: 0)
+        let input = MenuViewModel.Input(
+            viewWillAppearEvent: rx.viewWillAppear.take(1).map { _ in () },
+            refreshTableViewEvent: self.menuTableView.refreshControl?.rx.controlEvent(.valueChanged).map { _ in () } ?? Observable.just(()),
+            clearBtnTapEvent: self.clearBtn.rx.tap.asObservable(),
+            orderBtnTapEvent: orderBtn.rx.tap.asObservable()
+        )
         
-        return cell
-    }
-    
-    
-}
-
-#if DEBUG
-
-import SwiftUI
-
-struct MenuViewController_ViewPresentable: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        guard let viewModel = self.viewModel else { print("No Viewmodel"); return }
         
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        MenuViewController()
-    }
-    
-    
-}
+        guard let output = self.viewModel?.transform(from: input, disposeBag: self.disposeBag) else { print("cannot transform"); return }
 
-struct MenuViewController_PreviewProvider : PreviewProvider {
-    static var previews: some View {
-        MenuViewController_ViewPresentable()
-            .ignoresSafeArea()
+        output.menus
+            .bind(to: menuTableView.rx.items(cellIdentifier: MenuItemTableViewCell.identifier, cellType: MenuItemTableViewCell.self)) { index, element, cell in
+                
+                cell.onData
+                    .asObserver()
+                    .onNext(element)
+                
+                cell.onChanged
+                    .map { (element, $0) }
+                    .bind(to: viewModel.increaseMenuCount)
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.activeIndicator
+            .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] isActive in
+                if isActive {
+                    self?.menuTableView.refreshControl?.endRefreshing() }
+                })
+            .map { !$0 }
+            .bind(to: indicator.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.totalCountText
+            .debug()
+            .bind(to: itemCount.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.totalPriceText
+            .debug()
+            .bind(to: totalPrice.rx.text)
+            .disposed(by: disposeBag)
+
     }
 }
-
-#endif
