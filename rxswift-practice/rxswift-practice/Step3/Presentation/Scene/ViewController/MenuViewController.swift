@@ -18,7 +18,6 @@ final class MenuViewController: UIViewController {
     var viewModel: MenuViewModel?
     private let disposeBag = DisposeBag()
     
-    
     // MARK - UI
     private var headerTitle = UILabel().then {
         $0.text = "Bear Fried Center"
@@ -100,8 +99,8 @@ final class MenuViewController: UIViewController {
     // MARK - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSubViews()
         configureCommonUI()
+        configureSubViews()
         configureLayout()
         bindViewModel()
     }
@@ -179,7 +178,7 @@ extension MenuViewController {
     func bindViewModel() {
         
         let input = MenuViewModel.Input(
-            viewWillAppearEvent: rx.viewWillAppear.take(1).map { _ in () },
+            viewWillAppearEvent: rx.viewWillAppear.map { _ in () },
             refreshTableViewEvent: self.menuTableView.refreshControl?.rx.controlEvent(.valueChanged).map { _ in () } ?? Observable.just(()),
             clearBtnTapEvent: self.clearBtn.rx.tap.asObservable(),
             orderBtnTapEvent: orderBtn.rx.tap.asObservable()
@@ -187,7 +186,7 @@ extension MenuViewController {
         
         guard let viewModel = self.viewModel else { print("No Viewmodel"); return }
         
-        guard let output = self.viewModel?.transform(from: input, disposeBag: self.disposeBag) else { print("cannot transform"); return }
+        let output = viewModel.transform(from: input, disposeBag: self.disposeBag)
 
         output.menus
             .bind(to: menuTableView.rx.items(cellIdentifier: MenuItemTableViewCell.identifier, cellType: MenuItemTableViewCell.self)) { index, element, cell in
@@ -200,6 +199,12 @@ extension MenuViewController {
                     .map { (element, $0) }
                     .bind(to: viewModel.increaseMenuCount)
                     .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.orderedMenus
+            .subscribe {
+                viewModel.coordinator?.showOrderViewController(with: $0)
             }
             .disposed(by: disposeBag)
         

@@ -10,29 +10,26 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    var appCoordinator: Coordinator?
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let menuViewController = MenuViewController()
-        menuViewController.viewModel =
-        MenuViewModel(
-            MenuUseCase: MenuUseCase(
-                menuRepository: MenuRepository(
-                    urlSessionSerivce: URLSessionNetworkService())
-            )
-        )
-        
-        let viewController = UINavigationController(rootViewController: menuViewController) // 처음 보일 view controller
+        let navigationController = UINavigationController()
                 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = viewController // 위에서 만든 view controller를 첫 화면으로 띄우기
+//        window?.tintColor = .systemRed
+        window?.rootViewController = navigationController // 위에서 만든 view controller를 첫 화면으로 띄우기
         window?.makeKeyAndVisible() // 화면에 보이게끔
         window?.windowScene = windowScene
+        
+        self.appCoordinator = DefaultAppCoordinator(navigationController: navigationController)
+        self.appCoordinator?.start()
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

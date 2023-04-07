@@ -8,9 +8,16 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
 class OrderViewController: UIViewController {
-
+    
+    // MARK - Property
+    var viewModel: OrderViewModel?
+    var orderedMenus: [Menu]?
+    private let disposeBag = DisposeBag()
+    
+    // MARK - UI
     private var receiptTitle = UILabel().then {
         $0.text = "Ordered Items"
         $0.font = UIFont.systemFont(ofSize: 24, weight: .medium)
@@ -73,12 +80,14 @@ class OrderViewController: UIViewController {
     private var scrollView = UIScrollView()
     private var contentView = UIView()
     
+    // MARK - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        setupLayout()
+        
+        configureCommonUI()
         showOrderList()
-        setupNavigationBar()
+        configureLayout()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,11 +100,20 @@ class OrderViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
-    private func setupView() {
+    
+    private func configureCommonUI() {
         self.view.backgroundColor = .white
+        configureNavigationBar()
     }
     
-    private func setupLayout() {
+    private func configureNavigationBar() {
+        self.title = "Receipt"
+        navigationController?.navigationBar.backgroundColor = .black
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func configureLayout() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(containerStack)
@@ -130,17 +148,48 @@ class OrderViewController: UIViewController {
         }
         
     }
-    
-    private func setupNavigationBar() {
-        self.title = "Receipt"
-        navigationController?.navigationBar.backgroundColor = .black
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
 
 }
 
 extension OrderViewController {
+    
+    func bindViewModel() {
+        let input = OrderViewModel.Input(menus: orderedMenus ?? [])
+        
+        guard let viewModel = self.viewModel else { print("No ViewModel"); return }
+        
+        let output = viewModel.transform(from: input, disposeBag: self.disposeBag)
+        
+        ordersList.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { [weak self] _ in self?.ordersList.calcHeight() ?? 0 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] height in
+                self?.ordersList.snp.updateConstraints { make in
+                    make.height.equalTo(height + 40)
+                }
+                self?.view.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+                
+        output.orderedList
+            .asObservable()
+            .bind(to: ordersList.rx.text)
+            .disposed(by: disposeBag)
+
+        output.itemPriceText
+            .bind(to: itemsPrice.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.itemVatText
+            .bind(to: vatPrice.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.totalPriceText
+            .bind(to: totalPrice.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
     private func showOrderList() {
         self.ordersList.text = """
         SELECTED MENU 1
@@ -153,7 +202,6 @@ extension OrderViewController {
         SELECTED MENU 8
         SELECTED MENU 9
         """
-        
         updateTextViewHeight()
     }
     

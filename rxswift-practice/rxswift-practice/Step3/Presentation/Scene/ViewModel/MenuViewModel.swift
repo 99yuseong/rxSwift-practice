@@ -19,12 +19,15 @@ protocol ViewModelProtocol {
 final class MenuViewModel: ViewModelProtocol {
 
     // MARK - Property
+    weak var coordinator: MenuCoordinator?
+    
     private let disposeBag = DisposeBag()
     private let MenuUseCase: MenuUseCaseProtocol
     
     let increaseMenuCount: PublishSubject<(menu: Menu, inc: Int)>
     
-    init(MenuUseCase: MenuUseCaseProtocol) {
+    init(coordinator: MenuCoordinator?, MenuUseCase: MenuUseCaseProtocol) {
+        self.coordinator = coordinator
         self.MenuUseCase = MenuUseCase
         increaseMenuCount = PublishSubject<(menu: Menu, inc: Int)>()
     }
@@ -37,7 +40,8 @@ final class MenuViewModel: ViewModelProtocol {
     }
     
     struct Output {
-        var menus = BehaviorSubject<[Menu]>(value: [])
+        var menus = PublishSubject<[Menu]>()
+        var orderedMenus = PublishSubject<[Menu]>()
         let totalCountText = BehaviorSubject<String>(value: "")
         let totalPriceText = BehaviorSubject<String>(value: "")
         let activeIndicator = BehaviorSubject<Bool>(value: false)
@@ -58,14 +62,21 @@ final class MenuViewModel: ViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        input.clearBtnTapEvent
-                .withLatestFrom(output.menus)
-                .map { $0.map { $0.countUpdated(0) }}
-                .subscribe(onNext: output.menus.onNext)
-                .disposed(by: disposeBag)
+                
+        Observable.merge([
+            input.clearBtnTapEvent,
+            input.viewWillAppearEvent
+        ])
+            .withLatestFrom(output.menus)
+            .map { $0.map { $0.countUpdated(0) }}
+            .subscribe(onNext: output.menus.onNext)
+            .disposed(by: disposeBag)
         
-//        input.orderBtnTapEvent
-//            .withLatestFrom(output.menus)
+        input.orderBtnTapEvent
+            .withLatestFrom(output.menus)
+            .map { $0.filter { $0.count > 0 } }
+            .subscribe(onNext: { output.orderedMenus.onNext($0) })
+            .disposed(by: disposeBag)
         
         increaseMenuCount
             .map { (menu, inc) in
